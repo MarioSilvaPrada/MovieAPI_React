@@ -50,6 +50,7 @@ function App({ getGenres, genres, getMovies, movies }) {
           <h3>Genres</h3>
           {genres.map((genre, i) => (
             <p key={i}>{genre.name}</p>
+            <p></p>
           ))}
         </StyledSideBar>
 
