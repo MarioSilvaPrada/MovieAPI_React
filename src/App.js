@@ -27,7 +27,6 @@ const MovieCard = styled.div`
     width: 200px;
     border-radius: 5px;
   }
-  
 `;
 
 function App({ getGenres, genres, getMovies, movies }) {
@@ -61,7 +60,7 @@ function App({ getGenres, genres, getMovies, movies }) {
                 <img
                   src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
                 />
-                
+
                 <p>{movie.title}</p>
               </MovieCard>
             ))}
