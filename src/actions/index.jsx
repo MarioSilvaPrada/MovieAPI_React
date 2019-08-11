@@ -10,6 +10,7 @@ export const getGenres = () => async dispatch => {
   const res = await axios.get(
     `${API_URL}genre/movie/list?api_key=${API_KEY}`
   );
+  console.log(res.data)
   // const res = await tmdb.get('/genre/movie/list')
   dispatch({
     type: TYPES.GET_GENRES,
@@ -24,3 +25,4 @@ export const getMovies = type => async dispatch => {
     payload: res.data.results
   });
 };
+
