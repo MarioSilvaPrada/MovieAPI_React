@@ -3,7 +3,7 @@ import "./App.css";
 import styled from "styled-components";
 
 import { connect } from "react-redux";
-import { getGenres, getMovies, getConfig } from "./actions/index";
+import { getGenres, getMovies } from "./actions/index";
 
 const StyledContainer = styled.div`
   display: flex;
@@ -33,7 +33,6 @@ function App({ getGenres, genres, getMovies, movies }) {
   useEffect(() => {
     getGenres();
     getMovies("popular");
-    getConfig();
   }, []);
 
   return (
@@ -77,5 +76,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getGenres, getMovies, getConfig }
+  { getGenres, getMovies }
 )(App);
