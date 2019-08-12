@@ -18,11 +18,29 @@ export const getGenres = () => async dispatch => {
 };
 
 export const getMovies = (arr, query) => async dispatch => {
-  const res = getData(arr, query);
+  getData(arr, query);
 
+  const res = moviesData;
   dispatch({
     type: TYPES.GET_MOVIES,
     payload: res
   });
+};
 
+export const fetchMovies = (arr, query) => async dispatch => {
+
+  getData(arr, query);
+
+  const data = [];
+
+  await Promise.all(
+    moviesData[arr].map(async url => {
+      data.push(await axios.get(url));
+    })
+  );
+
+  dispatch({
+    type: TYPES.FETCH_MOVIES,
+    payload: data
+  });
 };

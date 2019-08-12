@@ -17,5 +17,4 @@ export function getData(arr, query) {
   for (let i = 1; i < 11; i++) {
     moviesData[arr].push(query + i);
   }
-  return moviesData
 }
