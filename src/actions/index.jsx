@@ -4,8 +4,7 @@ import axios from "axios";
 
 import { API_URL, API_KEY, getData, moviesData } from "../api/moviesFetch";
 
-// export const API_URL = "https://api.themoviedb.org/3/";
-// export const API_KEY = process.env.REACT_APP_APIKEY;
+
 
 // Get genres from API
 export const getGenres = () => async dispatch => {
@@ -44,3 +43,11 @@ export const fetchMovies = (arr, query) => async dispatch => {
     payload: data
   });
 };
+
+export const genreSelected = (genreId) => async (dispatch, getState) => {
+  console.log(getState())
+  dispatch({
+    type: TYPES.GENRE_SELECTED,
+    payload: genreId
+  })
+}
