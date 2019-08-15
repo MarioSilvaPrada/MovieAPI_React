@@ -1,11 +1,21 @@
 import React, { useEffect } from "react";
-import "./App.css";
+
 import styled from "styled-components";
 
 import { connect } from "react-redux";
 import { getGenres, getMovies, fetchMovies, genreSelected } from "./actions/index";
 
 import { queries } from "./api/moviesFetch";
+
+// Components
+import Pagination from './components/Pagination';
+
+const StyledApp = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+`
 
 const StyledContainer = styled.div`
   display: flex;
@@ -25,13 +35,7 @@ const StyledMovies = styled.div`
   flex-wrap: wrap;
 `;
 
-const StyledPages = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-evenly;
-  margin-bottom: 3rem;
-  cursor: pointer;
-`;
+
 
 const MovieCard = styled.div`
   width: 200px;
@@ -50,7 +54,7 @@ function App({ getGenres, genres, movies, fetchMovies, genreSelected, selectedGe
   }, []);
 
   return movies[0] ? (
-    <div className="App">
+    <StyledApp>
       <h1>Movie API</h1>
       <StyledContainer>
         <StyledSideBar>
@@ -79,26 +83,16 @@ function App({ getGenres, genres, movies, fetchMovies, genreSelected, selectedGe
                   src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
                 />
                 <p>{movie.title}</p>
-                <span>{movie.vote_average}</span>
+                <span>{movie.vote_average.toFixed(1)}</span>
                 <p>{movie.genre_ids[0]}</p>
               </MovieCard>
             ))}
-            <StyledPages>
-              <span>1</span>
-              <span>2</span>
-              <span>3</span>
-              <span>4</span>
-              <span>5</span>
-              <span>6</span>
-              <span>7</span>
-              <span>8</span>
-              <span>9</span>
-              <span>10</span>
-            </StyledPages>
+            
           </StyledMovies>
+          <Pagination />
         </div>
       </StyledContainer>
-    </div>
+    </StyledApp>
   ) : (
     "Loading"
   );
