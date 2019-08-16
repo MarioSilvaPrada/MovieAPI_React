@@ -17,7 +17,7 @@ import {
 const router = (
   <Provider store={store}>
     <Router>
-      <App />
+      <Route path="/:page" component={App} />
     </Router>
   </Provider>
 );

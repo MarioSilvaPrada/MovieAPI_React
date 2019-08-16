@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
+import { connect } from "react-redux";
+
+import { getPage, getURL, fetchMovies } from "../actions/index";
 
 const StyledPages = styled.div`
   width: 100%;
@@ -12,23 +15,29 @@ const StyledPages = styled.div`
   width: 100%;
 `;
 
-const Pagination = () => {
+const Pagination = ({ pageSelected, getPage, getURL, fetchMovies }) => {
+  useEffect(() => {
+    getPage(pageSelected);
+  }, []);
+
   const pageNumbers = [];
 
   for (let i = 1; i <= 10; i++) {
     pageNumbers.push(
-      <Link to={`/${i}`}>
+      <Link key={i} to={`/${i}`} onClick={() => {getPage(i); getURL('popular', i); fetchMovies()}}>
         <span>{i}</span>
       </Link>
     );
   }
-  return (
-    <StyledPages>
-      {pageNumbers}
-    </StyledPages>
-  );
+
+  return <StyledPages>{pageNumbers}</StyledPages>;
 };
 
-export default Pagination;
+const mapStateToProps = ({ getPage }) => ({
+  page: getPage.page
+});
 
-
+export default connect(
+  mapStateToProps,
+  { getPage, getURL, fetchMovies }
+)(Pagination);

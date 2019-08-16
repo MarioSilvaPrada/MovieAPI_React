@@ -3,19 +3,17 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 
 import { connect } from "react-redux";
-import { getGenres, getMovies, fetchMovies, genreSelected } from "./actions/index";
-
-import { queries } from "./api/moviesFetch";
+import { getGenres, getURL, fetchMovies, genreSelected } from "./actions/index";
 
 // Components
-import Pagination from './components/Pagination';
+import Pagination from "./components/Pagination";
 
 const StyledApp = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-`
+`;
 
 const StyledContainer = styled.div`
   display: flex;
@@ -35,8 +33,6 @@ const StyledMovies = styled.div`
   flex-wrap: wrap;
 `;
 
-
-
 const MovieCard = styled.div`
   width: 200px;
   margin: 2em;
@@ -47,63 +43,73 @@ const MovieCard = styled.div`
   }
 `;
 
-function App({ getGenres, genres, movies, fetchMovies, genreSelected, selectedGenre }) {
+const App = ({
+  getGenres,
+  genres,
+  movies,
+  fetchMovies,
+  genreSelected,
+  getURL,
+  selectedGenre,
+  match,
+  url
+}) => {
   useEffect(() => {
     getGenres();
-    fetchMovies("popular_movies", queries.popular);
+    getURL();
+    fetchMovies();
   }, []);
 
-  return movies[0] ? (
+  return movies ? (
     <StyledApp>
       <h1>Movie API</h1>
       <StyledContainer>
         <StyledSideBar>
           <div>
             <h3>Discover</h3>
-            <p onClick={() => fetchMovies("popular_movies", queries.popular)}>
-              Popular
-            </p>
-            <p onClick={() => fetchMovies("top_movies", queries.top_rated)}>Top Rated</p>
-            <p onClick={() => fetchMovies("theaters_movies", queries.theaters)}>Upcoming</p>
+            <p onClick={() => fetchMovies()}>Popular</p>
+            <p onClick={() => fetchMovies()}>Top Rated</p>
+            <p onClick={() => fetchMovies()}>Upcoming</p>
           </div>
           <h3>Genres</h3>
           <p>All genres</p>
           {genres.map((genre, i) => (
-            <p key={i} onClick={() => genreSelected(genre.id)}>{genre.name}</p>
+            <p key={i} onClick={() => genreSelected(genre.id)}>
+              {genre.name}
+            </p>
           ))}
         </StyledSideBar>
         <div>
           <StyledMovies>
-            {/* {console.log(movies.map(movie => movie))} */}
-            {movies[0]["data"]["results"]
-              .filter(movie => movie.genre_ids[0] === selectedGenre)
+            {movies["results"]
+              // .filter(movie => movie.genre_ids[0] === selectedGenre)
               .map((movie, i) => (
-              <MovieCard key={i}>
-                <img
-                  src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
-                />
-                <p>{movie.title}</p>
-                <span>{movie.vote_average.toFixed(1)}</span>
-                <p>{movie.genre_ids[0]}</p>
-              </MovieCard>
-            ))}
-            
+                <MovieCard key={i}>
+                  <img
+                    src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
+                  />
+                  <p>{movie.title}</p>
+                  <span>{movie.vote_average.toFixed(1)}</span>
+                  <p>{movie.genre_ids[0]}</p>
+                </MovieCard>
+              ))}
           </StyledMovies>
-          <Pagination />
+          <Pagination pageSelected={match.params.page} />
         </div>
       </StyledContainer>
     </StyledApp>
   ) : (
     "Loading"
   );
-}
+};
 const mapStateToProps = ({ movieReducers, fetchReducer }) => ({
   genres: movieReducers.genres,
   selectedGenre: movieReducers.genreSelected,
-  movies: fetchReducer
+  movies: fetchReducer.movies,
+  url: fetchReducer.url
 });
 
 export default connect(
   mapStateToProps,
-  { getGenres, getMovies, fetchMovies, genreSelected }
+  { getGenres, getURL, fetchMovies, genreSelected }
 )(App);
