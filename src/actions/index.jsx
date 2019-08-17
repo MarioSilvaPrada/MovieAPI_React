@@ -13,14 +13,14 @@ export const getGenres = () => async dispatch => {
   });
 };
 
-export const getURL = (
-  discoverType = "popular",
-  page = 1
-) => async (dispatch, getState) => {
+export const getURL = (discoverType = "popular") => async (
+  dispatch,
+  getState
+) => {
   let url;
+  let page = getState().getPage.page;
   switch (discoverType) {
     case "popular":
-    console.log(getState().getPage)
 
       url = `${API_URL}discover/movie?api_key=${API_KEY}&sort_by=popularity.desc&include?&page=${page}`;
       dispatch({
@@ -71,6 +71,7 @@ export const genreSelected = genreId => async (dispatch, getState) => {
 };
 
 export const getPage = (page = 1) => async dispatch => {
+  
   dispatch({
     type: TYPES.GET_PAGE,
     payload: page

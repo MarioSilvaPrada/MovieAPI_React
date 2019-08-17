@@ -8,6 +8,7 @@ import { getGenres, getURL, fetchMovies, genreSelected } from "./actions/index";
 // Components
 import Pagination from "./components/Pagination";
 
+
 const StyledApp = styled.div`
   display: flex;
   justify-content: center;
@@ -52,13 +53,14 @@ const App = ({
   getURL,
   selectedGenre,
   match,
-  url
+  url,
+  page
 }) => {
   useEffect(() => {
     getGenres();
     getURL();
     fetchMovies();
-  }, []);
+  }, [page]);
 
   return movies ? (
     <StyledApp>
@@ -102,11 +104,12 @@ const App = ({
     "Loading"
   );
 };
-const mapStateToProps = ({ movieReducers, fetchReducer }) => ({
+const mapStateToProps = ({ movieReducers, fetchReducer, getPage }) => ({
   genres: movieReducers.genres,
   selectedGenre: movieReducers.genreSelected,
   movies: fetchReducer.movies,
-  url: fetchReducer.url
+  url: fetchReducer.url,
+  page: getPage.page
 });
 
 export default connect(

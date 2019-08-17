@@ -17,14 +17,21 @@ const StyledPages = styled.div`
 
 const Pagination = ({ pageSelected, getPage, getURL, fetchMovies }) => {
   useEffect(() => {
-    getPage(pageSelected);
-  }, []);
+    getURL();
+    fetchMovies();
+  }, [pageSelected]);
 
   const pageNumbers = [];
 
   for (let i = 1; i <= 10; i++) {
     pageNumbers.push(
-      <Link key={i} to={`/${i}`} onClick={() => {getPage(i); getURL('popular', i); fetchMovies()}}>
+      <Link
+        key={i}
+        to={`/${i}`}
+        onClick={() => {
+          getPage(i);
+        }}
+      >
         <span>{i}</span>
       </Link>
     );
