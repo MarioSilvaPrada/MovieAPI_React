@@ -10,13 +10,13 @@ import { Provider } from "react-redux";
 import {
   BrowserRouter as Router,
   Route,
-  Switch,
   Redirect
 } from "react-router-dom";
 
 const router = (
   <Provider store={store}>
     <Router>
+      <Redirect from="/" to="/1" />
       <Route path="/:page" component={App} />
     </Router>
   </Provider>

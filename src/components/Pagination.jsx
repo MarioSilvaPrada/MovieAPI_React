@@ -20,7 +20,6 @@ const Pagination = ({ pageSelected, getPage, getURL, fetchMovies }) => {
     getURL();
     fetchMovies();
   }, [pageSelected]);
-
   const pageNumbers = [];
 
   for (let i = 1; i <= 10; i++) {
