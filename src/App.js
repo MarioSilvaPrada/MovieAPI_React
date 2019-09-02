@@ -101,13 +101,11 @@ const App = ({
   }, []);
 
   useEffect(() => {
-    getPage();
     fetchMovies();
   }, [url]);
 
   return movies ? (
     <StyledApp>
-      {console.log(url)}
       <h1>Movie API</h1>
       <StyledContainer>
         <StyledSideBar>
