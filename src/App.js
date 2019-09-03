@@ -39,6 +39,19 @@ const StyledContainer = styled.div`
 const StyledSideBar = styled.div`
   display: flex;
   flex-direction: column;
+  overflow-y: scroll;
+  height: 40rem;
+  width: 43rem;
+
+  ::-webkit-scrollbar {
+    width: 0.6rem;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #005b99;
+    border-radius: 2rem;
+  }
 
   p {
     cursor: pointer;
@@ -64,22 +77,22 @@ const StyleRating = styled.span`
   position: absolute;
   background: #f7b71d;
   color: black;
-  font-size: .6rem;
-  padding: .3rem .4rem;
-  border-radius: .2rem;
+  font-size: 0.6rem;
+  padding: 0.3rem 0.4rem;
+  border-radius: 0.2rem;
   font-weight: bold;
-  top: -.5rem;
+  top: -0.5rem;
   left: 9rem;
   border: 1px solid black;
-  display:flex;
+  display: flex;
   align-items: center;
-`
+`;
 
 const StyledMoviesContainer = styled.div`
-  background: #005B96;
+  background: #005b96;
   margin-left: 2rem;
   border-radius: 2rem;
-`
+`;
 
 const App = ({
   getGenres,
@@ -89,9 +102,7 @@ const App = ({
   genreSelected,
   getURL,
   getPage,
-  match,
-  url,
-  page
+  url
 }) => {
   useEffect(() => {
     getGenres();
@@ -103,6 +114,12 @@ const App = ({
   useEffect(() => {
     fetchMovies();
   }, [url]);
+
+  const getGenreName = genreId => {
+    genres.map(genre => (genre.id == genreId ? genre.name : ""));
+  };
+
+  console.log(genres);
 
   return movies ? (
     <StyledApp>
@@ -133,12 +150,15 @@ const App = ({
                     src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
                   />
                   <p>{movie.title}</p>
-                  <StyleRating><TiStar />{movie.vote_average.toFixed(1)}</StyleRating>
-                  <p>{movie.genre_ids[0]}</p>
+                  <StyleRating>
+                    <TiStar />
+                    {movie.vote_average.toFixed(1)}
+                  </StyleRating>
+                  <p>{getGenreName(movie.genre_ids[0])}</p>
                 </MovieCard>
               ))}
           </StyledMovies>
-          <Pagination pageSelected={match.params.page} />
+          <Pagination />
         </StyledMoviesContainer>
       </StyledContainer>
     </StyledApp>

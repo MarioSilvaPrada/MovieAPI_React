@@ -44,7 +44,7 @@ export const getURL = (discoverType = "popular") => async (
 export const fetchMovies = () => async (dispatch, getState) => {
   let url = getState().fetchReducer.url;
   let res = await axios.get(url);
-
+console.log(res.data)
   dispatch({
     type: TYPES.FETCH_MOVIES,
     payload: res.data
@@ -65,3 +65,4 @@ export const getPage = (page = 1) => async dispatch => {
     payload: page
   });
 };
+

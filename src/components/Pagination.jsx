@@ -6,33 +6,48 @@ import { connect } from "react-redux";
 
 import { getPage, getURL, fetchMovies } from "../actions/index";
 
+const StyledNumber = styled.span`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 1rem;
+  height: 1rem;
+  cursor: pointer;
+  color: ${props => props.color};
+  border: ${props => (props.color ? "2px solid #003459" : "")};
+  padding: ${props => (props.color ? ".5rem" : "")};
+  font-weight: ${props => (props.color ? "bold" : "")};
+  border-radius: ${props => (props.color ? "200%" : "")};
+`;
+
 const StyledPages = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-evenly;
+  align-items: center;
   margin-bottom: 3rem;
-  cursor: pointer;
-  width: 100%;
+  max-width: 40rem;
+  margin: 3rem auto;
 `;
 
-const Pagination = ({ pageSelected, getPage, getURL, fetchMovies }) => {
+const Pagination = ({ page, getPage, getURL, fetchMovies }) => {
   useEffect(() => {
     getURL();
     fetchMovies();
-  }, [pageSelected]);
+  }, [page]);
   const pageNumbers = [];
 
   for (let i = 1; i <= 10; i++) {
     pageNumbers.push(
-      <Link
+      <StyledNumber
         key={i}
-        to={`/${i}`}
+        color={i === page ? "#003459" : ""}
         onClick={() => {
           getPage(i);
         }}
       >
-        <span>{i}</span>
-      </Link>
+        {i}
+      </StyledNumber>
     );
   }
 
