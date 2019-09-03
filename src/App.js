@@ -12,7 +12,7 @@ import {
 } from "./actions/index";
 
 import { TiStar } from "react-icons/ti";
-
+import { white } from "./config/style";
 // Components
 import Pagination from "./components/Pagination";
 
@@ -56,6 +56,10 @@ const StyledSideBar = styled.div`
   p {
     cursor: pointer;
   }
+
+  .isSelected {
+    color: red;
+  }
 `;
 
 const StyledMovies = styled.div`
@@ -70,6 +74,11 @@ const MovieCard = styled.div`
   img {
     width: 100%;
     border-radius: 5px;
+  }
+  .movie-genre {
+    color: ${white(0.4)};
+    font-weight: 600;
+    
   }
 `;
 
@@ -102,7 +111,8 @@ const App = ({
   genreSelected,
   getURL,
   getPage,
-  url
+  url,
+  discover
 }) => {
   useEffect(() => {
     getGenres();
@@ -115,12 +125,6 @@ const App = ({
     fetchMovies();
   }, [url]);
 
-  const getGenreName = genreId => {
-    genres.map(genre => (genre.id == genreId ? genre.name : ""));
-  };
-
-  console.log(genres);
-
   return movies ? (
     <StyledApp>
       <h1>Movie API</h1>
@@ -128,9 +132,9 @@ const App = ({
         <StyledSideBar>
           <div>
             <h3>Discover</h3>
-            <p onClick={() => getURL("popular")}>Popular</p>
-            <p onClick={() => getURL("top_rated")}>Top Rated</p>
-            <p onClick={() => getURL("theaters")}>Upcoming</p>
+            <p className={discover === 'Popular' ? 'isSelected' : ''} onClick={() => getURL("popular")}>Popular</p>
+            <p className={discover === 'Top Rated' ? 'isSelected' : ''} onClick={() => getURL("top_rated")}>Top Rated</p>
+            <p className={discover === 'Now Playing' ? 'isSelected' : ''} onClick={() => getURL("now_playing")}>Now Playing</p>
           </div>
           <h3>Genres</h3>
           <p>All genres</p>
@@ -154,7 +158,11 @@ const App = ({
                     <TiStar />
                     {movie.vote_average.toFixed(1)}
                   </StyleRating>
-                  <p>{getGenreName(movie.genre_ids[0])}</p>
+                  <p className="movie-genre">
+                    {genres.map(genre =>
+                      genre.id == movie.genre_ids[0] ? genre.name : ""
+                    )}
+                  </p>
                 </MovieCard>
               ))}
           </StyledMovies>
@@ -172,6 +180,7 @@ const mapStateToProps = ({ movieReducers, fetchReducer, getPage }) => ({
   selectedGenre: movieReducers.genreSelected,
   movies: fetchReducer.movies,
   url: fetchReducer.url,
+  discover: fetchReducer.discover,
   page: getPage.page
 });
 
