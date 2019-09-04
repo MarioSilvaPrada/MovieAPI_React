@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
+import MovieInfo from "./components/MovieInfo";
 import * as serviceWorker from "./serviceWorker";
 
 import store from "./store/store";
@@ -16,8 +17,9 @@ import {
 const router = (
   <Provider store={store}>
     <Router>
-      <Redirect from="/" to="/1" />
-      <Route path="/:page" component={App} />
+      {/* <Redirect from="/" to="/" /> */}
+      <Route exact path="/" component={App} />
+      <Route exact path="/:movieId" component={MovieInfo} />
     </Router>
   </Provider>
 );

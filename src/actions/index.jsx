@@ -13,26 +13,22 @@ export const getGenres = () => async dispatch => {
   });
 };
 
-export const getURL = (discoverType = "popular") => async (
-  dispatch,
-  getState
-) => {
+export const getURL = () => async (dispatch, getState) => {
   let url;
-  let discover;
   let page = getState().getPage.page;
+  let discoverType = getState().fetchReducer.discover;
+  console.log(discoverType)
   switch (discoverType) {
     case "popular":
       url = `${API_URL}discover/movie?api_key=${API_KEY}&sort_by=popularity.desc&include?&page=${page}`;
-      discover = "Popular";
+
       break;
     case "top_rated":
       url = `${API_URL}movie/top_rated?api_key=${API_KEY}&page=${page}`;
-      discover = "Top Rated";
 
       break;
     case "now_playing":
       url = `${API_URL}movie/now_playing?api_key=${API_KEY}&page=${page}`;
-      discover = "Now Playing";
 
       break;
     default:
@@ -40,14 +36,13 @@ export const getURL = (discoverType = "popular") => async (
   }
   dispatch({
     type: TYPES.GET_URL,
-    payload: { url, discover }
+    payload: { url }
   });
 };
 
 export const fetchMovies = () => async (dispatch, getState) => {
   let url = getState().fetchReducer.url;
   let res = await axios.get(url);
-  console.log(res.data);
   dispatch({
     type: TYPES.FETCH_MOVIES,
     payload: res.data
@@ -62,9 +57,15 @@ export const genreSelected = genreId => async (dispatch, getState) => {
 };
 
 export const getPage = (page = 1) => async dispatch => {
-  console.log();
   dispatch({
     type: TYPES.GET_PAGE,
     payload: page
+  });
+};
+
+export const selectDiscover = (discover) => async dispatch => {
+  dispatch({
+    type: TYPES.SELECT_DISCOVER,
+    payload: discover
   });
 };

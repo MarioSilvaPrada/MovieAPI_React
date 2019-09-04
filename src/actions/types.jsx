@@ -12,3 +12,5 @@ export const GENRE_SELECTED = 'GENRE_SELECTED';
 
 // get Page
 export const GET_PAGE = 'GET_PAGE';
+
+export const SELECT_DISCOVER = 'SELECT_DISCOVER';

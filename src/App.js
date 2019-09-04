@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 import { connect } from "react-redux";
 import {
@@ -8,7 +9,8 @@ import {
   getURL,
   fetchMovies,
   genreSelected,
-  getPage
+  getPage,
+  selectDiscover
 } from "./actions/index";
 
 import { TiStar } from "react-icons/ti";
@@ -55,10 +57,23 @@ const StyledSideBar = styled.div`
 
   p {
     cursor: pointer;
+    padding: 0.4em 0.2em;
+    text-align: center;
+  }
+
+  p:hover {
+    cursor: pointer;
+    background: ${white(0.3)};
+    color: #005b96;
+    transition: 0.5s;
+    font-weight: bold;
   }
 
   .isSelected {
-    color: red;
+    color: #005b96;
+    background: ${white(0.5)};
+    transition: 0.5s;
+    font-weight: bold;
   }
 `;
 
@@ -78,7 +93,6 @@ const MovieCard = styled.div`
   .movie-genre {
     color: ${white(0.4)};
     font-weight: 600;
-    
   }
 `;
 
@@ -112,18 +126,23 @@ const App = ({
   getURL,
   getPage,
   url,
-  discover
+  discover,
+  selectDiscover
 }) => {
   useEffect(() => {
     getGenres();
     getPage();
+    selectDiscover("popular");
     getURL();
     fetchMovies();
   }, []);
 
+  // Everytime User select a different discover
   useEffect(() => {
+    getPage(1);
+    getURL();
     fetchMovies();
-  }, [url]);
+  }, [discover]);
 
   return movies ? (
     <StyledApp>
@@ -132,9 +151,24 @@ const App = ({
         <StyledSideBar>
           <div>
             <h3>Discover</h3>
-            <p className={discover === 'Popular' ? 'isSelected' : ''} onClick={() => getURL("popular")}>Popular</p>
-            <p className={discover === 'Top Rated' ? 'isSelected' : ''} onClick={() => getURL("top_rated")}>Top Rated</p>
-            <p className={discover === 'Now Playing' ? 'isSelected' : ''} onClick={() => getURL("now_playing")}>Now Playing</p>
+            <p
+              className={discover === "popular" ? "isSelected" : ""}
+              onClick={() => selectDiscover("popular")}
+            >
+              Popular
+            </p>
+            <p
+              className={discover === "top_rated" ? "isSelected" : ""}
+              onClick={() => selectDiscover("top_rated")}
+            >
+              Top Rated
+            </p>
+            <p
+              className={discover === "now_playing" ? "isSelected" : ""}
+              onClick={() => selectDiscover("now_playing")}
+            >
+              Now Playing
+            </p>
           </div>
           <h3>Genres</h3>
           <p>All genres</p>
@@ -150,9 +184,15 @@ const App = ({
               // .filter(movie => movie.genre_ids[0] === selectedGenre)
               .map((movie, i) => (
                 <MovieCard key={i}>
-                  <img
-                    src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
-                  />
+                  <Link
+                    to={`/${movie.id}`}
+                    style={{ textDecoration: "none", color: white }}
+                  >
+                    <img
+                      src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
+                    />
+                  </Link>
+
                   <p>{movie.title}</p>
                   <StyleRating>
                     <TiStar />
@@ -186,5 +226,5 @@ const mapStateToProps = ({ movieReducers, fetchReducer, getPage }) => ({
 
 export default connect(
   mapStateToProps,
-  { getGenres, getURL, fetchMovies, genreSelected, getPage }
+  { getGenres, getURL, fetchMovies, genreSelected, getPage, selectDiscover }
 )(App);
