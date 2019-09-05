@@ -10,11 +10,13 @@ import {
   fetchMovies,
   genreSelected,
   getPage,
-  selectDiscover
+  selectDiscover,
+  selectMovie
 } from "./actions/index";
 
 import { TiStar } from "react-icons/ti";
 import { white } from "./config/style";
+
 // Components
 import Pagination from "./components/Pagination";
 
@@ -123,11 +125,12 @@ const App = ({
   movies,
   fetchMovies,
   genreSelected,
+  selectedGenre,
   getURL,
   getPage,
-  url,
   discover,
-  selectDiscover
+  selectDiscover,
+  selectMovie
 }) => {
   useEffect(() => {
     getGenres();
@@ -142,7 +145,7 @@ const App = ({
     getPage(1);
     getURL();
     fetchMovies();
-  }, [discover]);
+  }, [discover, selectedGenre]);
 
   return movies ? (
     <StyledApp>
@@ -226,5 +229,13 @@ const mapStateToProps = ({ movieReducers, fetchReducer, getPage }) => ({
 
 export default connect(
   mapStateToProps,
-  { getGenres, getURL, fetchMovies, genreSelected, getPage, selectDiscover }
+  {
+    getGenres,
+    getURL,
+    fetchMovies,
+    genreSelected,
+    getPage,
+    selectDiscover,
+    selectMovie
+  }
 )(App);

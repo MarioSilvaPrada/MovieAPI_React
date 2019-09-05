@@ -14,3 +14,6 @@ export const GENRE_SELECTED = 'GENRE_SELECTED';
 export const GET_PAGE = 'GET_PAGE';
 
 export const SELECT_DISCOVER = 'SELECT_DISCOVER';
+
+export const GET_MOVIE_INFO = 'GET_MOVIE_INFO';
+export const SELECT_MOVIE_ID = 'SELECT_MOVIE_ID';

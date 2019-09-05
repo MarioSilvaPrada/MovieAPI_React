@@ -17,22 +17,22 @@ export const getURL = () => async (dispatch, getState) => {
   let url;
   let page = getState().getPage.page;
   let discoverType = getState().fetchReducer.discover;
-  console.log(discoverType)
+  let genreSelected = getState().movieReducers.genreSelected;
   switch (discoverType) {
     case "popular":
-      url = `${API_URL}discover/movie?api_key=${API_KEY}&sort_by=popularity.desc&include?&page=${page}`;
+      url = `${API_URL}discover/movie?api_key=${API_KEY}&sort_by=popularity.desc&include?&page=${page}&with_genres=${genreSelected}`;
 
       break;
     case "top_rated":
-      url = `${API_URL}movie/top_rated?api_key=${API_KEY}&page=${page}`;
+      url = `${API_URL}movie/top_rated?api_key=${API_KEY}&page=${page}&with_genres=${genreSelected}`;
 
       break;
     case "now_playing":
-      url = `${API_URL}movie/now_playing?api_key=${API_KEY}&page=${page}`;
+      url = `${API_URL}movie/now_playing?api_key=${API_KEY}&page=${page}&with_genres=${genreSelected}`;
 
       break;
     default:
-      url = `${API_URL}discover/movie?api_key=${API_KEY}&sort_by=popularity.desc&include?&page=1`;
+      url = `${API_URL}discover/movie?api_key=${API_KEY}&sort_by=popularity.desc&include?&page=1&with_genres=${genreSelected}`;
   }
   dispatch({
     type: TYPES.GET_URL,
@@ -49,7 +49,7 @@ export const fetchMovies = () => async (dispatch, getState) => {
   });
 };
 
-export const genreSelected = genreId => async (dispatch, getState) => {
+export const genreSelected = genreId => async dispatch => {
   dispatch({
     type: TYPES.GENRE_SELECTED,
     payload: genreId
@@ -63,9 +63,22 @@ export const getPage = (page = 1) => async dispatch => {
   });
 };
 
-export const selectDiscover = (discover) => async dispatch => {
+export const selectDiscover = discover => async dispatch => {
   dispatch({
     type: TYPES.SELECT_DISCOVER,
     payload: discover
+  });
+};
+
+export const selectMovie = movieId => async dispatch => {
+  let id = movieId;
+  let data = await axios.get(`${API_URL}movie/${id}?api_key=${API_KEY}`);
+  let trailer = await axios.get(
+    `${API_URL}movie/${id}/videos?api_key=${API_KEY}`
+  );
+  console.log('worksss')
+  dispatch({
+    type: TYPES.SELECT_MOVIE_ID,
+    payload: { id, data: data.data, trailer: trailer.data.results[0] }
   });
 };
