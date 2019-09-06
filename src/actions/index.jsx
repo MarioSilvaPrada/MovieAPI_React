@@ -76,7 +76,6 @@ export const selectMovie = movieId => async dispatch => {
   let trailer = await axios.get(
     `${API_URL}movie/${id}/videos?api_key=${API_KEY}`
   );
-  console.log('worksss')
   dispatch({
     type: TYPES.SELECT_MOVIE_ID,
     payload: { id, data: data.data, trailer: trailer.data.results[0] }

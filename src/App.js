@@ -33,7 +33,7 @@ const StyledApp = styled.div`
 
 const StyledContainer = styled.div`
   display: flex;
-  max-width: 75rem;
+  width: 80rem;
   padding: 3rem;
   background: #003459;
   border-radius: 2rem;
@@ -45,7 +45,7 @@ const StyledSideBar = styled.div`
   flex-direction: column;
   overflow-y: scroll;
   height: 40rem;
-  width: 43rem;
+  padding-right: 1rem;
 
   ::-webkit-scrollbar {
     width: 0.6rem;
@@ -80,16 +80,21 @@ const StyledSideBar = styled.div`
 `;
 
 const StyledMovies = styled.div`
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  grid-template-rows: 25rem;
+  width: 100%;
 `;
 
 const MovieCard = styled.div`
-  width: 12rem;
   margin: 2em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   position: relative;
   img {
-    width: 100%;
+    width: 12rem;
     border-radius: 5px;
   }
   .movie-genre {
@@ -117,6 +122,7 @@ const StyledMoviesContainer = styled.div`
   background: #005b96;
   margin-left: 2rem;
   border-radius: 2rem;
+  width: 100%;
 `;
 
 const App = ({
@@ -201,11 +207,7 @@ const App = ({
                     <TiStar />
                     {movie.vote_average.toFixed(1)}
                   </StyleRating>
-                  <p className="movie-genre">
-                    {genres.map(genre =>
-                      genre.id == movie.genre_ids[0] ? genre.name : ""
-                    )}
-                  </p>
+                  
                 </MovieCard>
               ))}
           </StyledMovies>
