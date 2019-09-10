@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { connect } from "react-redux";
 
 import { selectMovie } from "../actions/index";
+import Button from '../config/Button';
 
 const StyledContainer = styled.div`
   height: 100vh;
@@ -10,10 +11,10 @@ const StyledContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #00b4db;
-  background: -webkit-linear-gradient(to right, #0083b0, #00b4db);
-  background: linear-gradient(to right, #0083b0, #00b4db);
   color: white;
+  background: url("https://image.tmdb.org/t/p/w1280${props =>
+    props.image}") no-repeat;
+  background-size: cover;
 `;
 
 const Title = styled.div`
@@ -26,11 +27,14 @@ const StyledCard = styled.div`
   width: 70%;
   height: 80%;
   background: #005b96;
+  opacity: 0.9;
   border-radius: 3rem;
   padding: 2rem 3rem;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
+  filter: none;
+  border: 2px solid white;
 `;
 
 const MoviePoster = styled.div`
@@ -66,21 +70,52 @@ const StyledInfo = styled.div`
   .movie-genres {
     display: flex;
     margin-top: 0.5rem;
-    div{
-      margin-right:1.2rem;
+    div {
+      margin-right: 1.2rem;
     }
   }
 `;
 
-const MovieInfo = ({ match, data, trailer, selectMovie }) => {
+const StyledButtons = styled.div`
+  display: flex;
+`;
+
+const StyledCredits = styled.div`
+  display: flex;
+  overflow-x: scroll;
+
+  ::-webkit-scrollbar {
+    width: 0.6rem;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #003459;
+    border-radius: 2rem;
+    border: 2px solid white;
+  }
+
+  img {
+    width: 4rem;
+    height: 4rem;
+    object-fit: cover;
+    border-radius: 100%;
+    margin-right: 1rem ;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+`;
+
+const MovieInfo = ({ history, match, data, trailer, selectMovie, credits }) => {
   let id = match.params.movieId;
 
+  console.log(trailer);
   useEffect(() => {
     selectMovie(id);
   }, []);
 
   return data ? (
-    <StyledContainer>
+    <StyledContainer image={data.backdrop_path}>
       <StyledCard>
         <MoviePoster>
           <img src={`https://image.tmdb.org/t/p/w300${data.poster_path}`} />
@@ -90,7 +125,8 @@ const MovieInfo = ({ match, data, trailer, selectMovie }) => {
           <Title>
             <h1>{data.title}</h1>
             <p>
-              {data.spoken_languages[0].name} / {data.runtime} min / {data.release_date.split("-")[0]}
+              {data.spoken_languages[0].name} / {data.runtime} min /{" "}
+              {data.release_date.split("-")[0]}
             </p>
           </Title>
           <p className="desc">Genres</p>
@@ -101,6 +137,20 @@ const MovieInfo = ({ match, data, trailer, selectMovie }) => {
           </div>
           <p className="desc">The Synopsis</p>
           <p className="movie-overview">{data.overview}</p>
+          <StyledButtons>
+            <Button href={data.homepage} title='Home Page'/>
+            <Button href={"https://www.imdb.com/title/" + data.imdb_id} title='IMDB'/>
+            <Button href={"https://www.youtube.com/watch?v=" + trailer.key} title='Trailer'/>
+          </StyledButtons>
+          <StyledCredits>
+            {credits.cast.map(actor => (
+              actor.profile_path ?
+              <img
+                src={`https://image.tmdb.org/t/p/w185${actor.profile_path}`}
+              />
+              : <img src='https://image.flaticon.com/icons/svg/145/145867.svg' />
+            ))}
+          </StyledCredits>
         </StyledInfo>
       </StyledCard>
     </StyledContainer>
@@ -111,7 +161,8 @@ const MovieInfo = ({ match, data, trailer, selectMovie }) => {
 
 const mapStateToProps = ({ movieInfo }) => ({
   data: movieInfo.data,
-  trailer: movieInfo.trailer
+  trailer: movieInfo.trailer,
+  credits: movieInfo.credits
 });
 
 export default connect(

@@ -11,15 +11,21 @@ import { Provider } from "react-redux";
 import {
   BrowserRouter as Router,
   Route,
-  Redirect
+  Redirect,
+  Switch
 } from "react-router-dom";
 
 const router = (
   <Provider store={store}>
     <Router>
-      {/* <Redirect from="/" to="/" /> */}
-      <Route exact path="/" component={App} />
-      <Route exact path="/:movieId" component={MovieInfo} />
+      <Switch>
+        {/* <Redirect from="/" to="/" /> */}
+        <Route path="/:movieId" component={MovieInfo} />
+        <Route exact path="/" render={props=> (
+          <App />
+        )} />
+
+      </Switch>
     </Router>
   </Provider>
 );
