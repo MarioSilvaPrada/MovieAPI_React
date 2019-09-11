@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { connect } from "react-redux";
 
 import { selectMovie } from "../actions/index";
-import Button from '../config/Button';
+import Button from "../config/Button";
 
 const StyledContainer = styled.div`
   height: 100vh;
@@ -100,7 +100,7 @@ const StyledCredits = styled.div`
     height: 4rem;
     object-fit: cover;
     border-radius: 100%;
-    margin-right: 1rem ;
+    margin-right: 1rem;
     margin-top: 1rem;
     margin-bottom: 1rem;
   }
@@ -114,7 +114,7 @@ const MovieInfo = ({ history, match, data, trailer, selectMovie, credits }) => {
     selectMovie(id);
   }, []);
 
-  return data ? (
+  return data && credits && trailer ? (
     <StyledContainer image={data.backdrop_path}>
       <StyledCard>
         <MoviePoster>
@@ -138,18 +138,26 @@ const MovieInfo = ({ history, match, data, trailer, selectMovie, credits }) => {
           <p className="desc">The Synopsis</p>
           <p className="movie-overview">{data.overview}</p>
           <StyledButtons>
-            <Button href={data.homepage} title='Home Page'/>
-            <Button href={"https://www.imdb.com/title/" + data.imdb_id} title='IMDB'/>
-            <Button href={"https://www.youtube.com/watch?v=" + trailer.key} title='Trailer'/>
+            <Button href={data.homepage} title="Home Page" />
+            <Button
+              href={"https://www.imdb.com/title/" + data.imdb_id}
+              title="IMDB"
+            />
+            <Button
+              href={"https://www.youtube.com/watch?v=" + trailer.key}
+              title="Trailer"
+            />
           </StyledButtons>
           <StyledCredits>
-            {credits.cast.map(actor => (
-              actor.profile_path ?
-              <img
-                src={`https://image.tmdb.org/t/p/w185${actor.profile_path}`}
-              />
-              : <img src='https://image.flaticon.com/icons/svg/145/145867.svg' />
-            ))}
+            {credits.cast.map(actor =>
+              actor.profile_path ? (
+                <img
+                  src={`https://image.tmdb.org/t/p/w185${actor.profile_path}`}
+                />
+              ) : (
+                <img src="https://image.flaticon.com/icons/svg/145/145867.svg" />
+              )
+            )}
           </StyledCredits>
         </StyledInfo>
       </StyledCard>
