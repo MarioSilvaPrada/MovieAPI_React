@@ -79,20 +79,14 @@ const StyledSideBar = styled.div`
   }
 `;
 
-const StyledMovies = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
-  grid-template-rows: 25rem;
-  width: 100%;
-`;
-
 const MovieCard = styled.div`
   margin: 2em;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   position: relative;
+  width: 13rem;
   img {
     width: 12rem;
     border-radius: 5px;
@@ -100,6 +94,10 @@ const MovieCard = styled.div`
   .movie-genre {
     color: ${white(0.4)};
     font-weight: 600;
+  }
+  p{
+    margin: 0;
+    text-align: center;
   }
 `;
 
@@ -122,6 +120,15 @@ const StyledMoviesContainer = styled.div`
   background: #005b96;
   margin-left: 2rem;
   border-radius: 2rem;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+
+`;
+
+const StyledMovies = styled.div`
+  display: flex;
+  flex-wrap: wrap;
   width: 100%;
 `;
 

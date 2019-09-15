@@ -24,8 +24,8 @@ const Title = styled.div`
 `;
 
 const StyledCard = styled.div`
-  width: 70%;
-  height: 80%;
+  width: 80rem;
+  height: 60rem;
   background: #005b96;
   opacity: 0.9;
   border-radius: 3rem;
@@ -42,6 +42,7 @@ const MoviePoster = styled.div`
   flex-direction: column;
   align-items: center;
   img {
+    width: 30rem;
     border-radius: 0.5rem;
     box-shadow: 0rem 2rem 5rem rgba(0, 0, 0, 0.25);
   }
@@ -53,8 +54,8 @@ const MoviePoster = styled.div`
 
 const StyledInfo = styled.div`
   display: flex;
-  flex-direction: column;
-  width: 40rem;
+  flex-direction: column; 
+  width: 35rem;
 
   .desc {
     margin-bottom: 0;
@@ -92,7 +93,7 @@ const StyledCredits = styled.div`
   ::-webkit-scrollbar-thumb {
     background: #003459;
     border-radius: 2rem;
-    border: 2px solid white;
+    border: 0.2rem solid white;
   }
 
   img {
@@ -114,7 +115,7 @@ const MovieInfo = ({ history, match, data, trailer, selectMovie, credits }) => {
     selectMovie(id);
   }, []);
 
-  return data && credits && trailer ? (
+  return (data && credits && trailer) ? (
     <StyledContainer image={data.backdrop_path}>
       <StyledCard>
         <MoviePoster>
