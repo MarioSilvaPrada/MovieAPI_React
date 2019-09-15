@@ -21,9 +21,7 @@ const router = (
       <Switch>
         {/* <Redirect from="/" to="/" /> */}
         <Route path="/:movieId" component={MovieInfo} />
-        <Route exact path="/" render={props=> (
-          <App />
-        )} />
+        <Route exact path="/" component={App} />
 
       </Switch>
     </Router>
