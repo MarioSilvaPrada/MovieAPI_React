@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-
 import { connect } from "react-redux";
 import {
   getGenres,
@@ -13,6 +12,8 @@ import {
   selectDiscover,
   selectMovie
 } from "./actions/index";
+
+import Spinner from "./components/Spinner";
 
 import { TiStar } from "react-icons/ti";
 import { white } from "./config/style";
@@ -95,7 +96,7 @@ const MovieCard = styled.div`
     color: ${white(0.4)};
     font-weight: 600;
   }
-  p{
+  p {
     margin: 0;
     text-align: center;
   }
@@ -123,7 +124,6 @@ const StyledMoviesContainer = styled.div`
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-
 `;
 
 const StyledMovies = styled.div`
@@ -143,7 +143,7 @@ const App = ({
   getPage,
   discover,
   selectDiscover,
-  selectMovie
+  isLoading
 }) => {
   useEffect(() => {
     getGenres();
@@ -152,7 +152,6 @@ const App = ({
     getURL();
     fetchMovies();
   }, []);
-
   // Everytime User select a different discover
   useEffect(() => {
     getPage(1);
@@ -160,7 +159,9 @@ const App = ({
     fetchMovies();
   }, [discover, selectedGenre]);
 
-  return movies ? (
+  return isLoading ? (
+    <Spinner />
+  ) : (
     <StyledApp>
       <h1>Movie API</h1>
       <StyledContainer>
@@ -214,7 +215,6 @@ const App = ({
                     <TiStar />
                     {movie.vote_average.toFixed(1)}
                   </StyleRating>
-                  
                 </MovieCard>
               ))}
           </StyledMovies>
@@ -222,8 +222,6 @@ const App = ({
         </StyledMoviesContainer>
       </StyledContainer>
     </StyledApp>
-  ) : (
-    "Loading"
   );
 };
 
@@ -233,7 +231,8 @@ const mapStateToProps = ({ movieReducers, fetchReducer, getPage }) => ({
   movies: fetchReducer.movies,
   url: fetchReducer.url,
   discover: fetchReducer.discover,
-  page: getPage.page
+  page: getPage.page,
+  isLoading: fetchReducer.loading
 });
 
 export default connect(

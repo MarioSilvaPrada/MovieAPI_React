@@ -2,8 +2,9 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
 
-import { selectMovie } from "../actions/index";
+import { selectMovie, isLoading } from "../actions/index";
 import Button from "../config/Button";
+import Spinner from "../components/Spinner";
 
 const StyledContainer = styled.div`
   height: 100vh;
@@ -12,8 +13,7 @@ const StyledContainer = styled.div`
   justify-content: center;
   align-items: center;
   color: white;
-  background: url("https://image.tmdb.org/t/p/w1280${props =>
-    props.image}") no-repeat;
+
   background-size: cover;
 `;
 
@@ -54,7 +54,7 @@ const MoviePoster = styled.div`
 
 const StyledInfo = styled.div`
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   width: 35rem;
 
   .desc {
@@ -86,7 +86,7 @@ const StyledCredits = styled.div`
   overflow-x: scroll;
 
   ::-webkit-scrollbar {
-    width: 0.6rem;
+    width: 0.4rem;
   }
 
   /* Handle */
@@ -107,15 +107,17 @@ const StyledCredits = styled.div`
   }
 `;
 
-const MovieInfo = ({ history, match, data, trailer, selectMovie, credits }) => {
+const MovieInfo = ({ history, match, data, trailer, selectMovie, credits, LoadingStatus, isLoading }) => {
   let id = match.params.movieId;
 
-  console.log(trailer);
   useEffect(() => {
+    isLoading(true)
     selectMovie(id);
-  }, []);
+  }, [id]);
 
-  return (data && credits && trailer) ? (
+  return LoadingStatus ? (
+    <Spinner />
+  ) : (
     <StyledContainer image={data.backdrop_path}>
       <StyledCard>
         <MoviePoster>
@@ -163,18 +165,17 @@ const MovieInfo = ({ history, match, data, trailer, selectMovie, credits }) => {
         </StyledInfo>
       </StyledCard>
     </StyledContainer>
-  ) : (
-    "Loading"
   );
 };
 
-const mapStateToProps = ({ movieInfo }) => ({
+const mapStateToProps = ({ movieInfo, fetchReducer }) => ({
   data: movieInfo.data,
   trailer: movieInfo.trailer,
-  credits: movieInfo.credits
+  credits: movieInfo.credits,
+  LoadingStatus: fetchReducer.loading
 });
 
 export default connect(
   mapStateToProps,
-  { selectMovie }
+  { selectMovie, isLoading }
 )(MovieInfo);

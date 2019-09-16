@@ -1,8 +1,10 @@
 import * as TYPES from "../actions/types";
 
 
-export default (state = [], action) => {
+export default (state = { loading: true }, action) => {
   switch (action.type) {
+    case TYPES.IS_LOADING:
+      return { ...state, loading: action.payload };
     case TYPES.GET_URL:
       return { ...state, ...action.payload };
     case TYPES.FETCH_MOVIES:

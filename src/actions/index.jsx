@@ -43,9 +43,15 @@ export const getURL = () => async (dispatch, getState) => {
 export const fetchMovies = () => async (dispatch, getState) => {
   let url = getState().fetchReducer.url;
   let res = await axios.get(url);
+
   dispatch({
     type: TYPES.FETCH_MOVIES,
     payload: res.data
+  });
+
+  dispatch({
+    type: TYPES.IS_LOADING,
+    payload: false
   });
 };
 
@@ -71,14 +77,39 @@ export const selectDiscover = discover => async dispatch => {
 };
 
 export const selectMovie = movieId => async dispatch => {
+  dispatch({
+    type: TYPES.IS_LOADING,
+    payload: true
+  });
   let id = movieId;
   let data = await axios.get(`${API_URL}movie/${id}?api_key=${API_KEY}`);
   let trailer = await axios.get(
     `${API_URL}movie/${id}/videos?api_key=${API_KEY}`
   );
-  let credits = await axios.get(`${API_URL}movie/${id}/credits?api_key=${API_KEY}`)
+
+  let credits = await axios.get(
+    `${API_URL}movie/${id}/credits?api_key=${API_KEY}`
+  );
+
   dispatch({
     type: TYPES.SELECT_MOVIE_ID,
-    payload: { id, data: data.data, trailer: trailer.data.results[0], credits: credits.data }
+    payload: {
+      id,
+      data: data.data,
+      trailer: trailer.data.results[0],
+      credits: credits.data
+    }
   });
+
+  // dispatch({
+  //   type: TYPES.IS_LOADING,
+  //   payload: false
+  // });
 };
+
+export const isLoading = bool => async dispatch => {
+   dispatch({
+    type: TYPES.IS_LOADING,
+    payload: bool
+  });
+} 
