@@ -77,10 +77,7 @@ export const selectDiscover = discover => async dispatch => {
 };
 
 export const selectMovie = movieId => async dispatch => {
-  dispatch({
-    type: TYPES.IS_LOADING,
-    payload: true
-  });
+
   let id = movieId;
   let data = await axios.get(`${API_URL}movie/${id}?api_key=${API_KEY}`);
   let trailer = await axios.get(
@@ -91,7 +88,7 @@ export const selectMovie = movieId => async dispatch => {
     `${API_URL}movie/${id}/credits?api_key=${API_KEY}`
   );
 
-  dispatch({
+  await dispatch({
     type: TYPES.SELECT_MOVIE_ID,
     payload: {
       id,
@@ -101,10 +98,10 @@ export const selectMovie = movieId => async dispatch => {
     }
   });
 
-  // dispatch({
-  //   type: TYPES.IS_LOADING,
-  //   payload: false
-  // });
+  dispatch({
+    type: TYPES.IS_LOADING_MOVIE_INFO,
+    payload: false
+  });
 };
 
 export const isLoading = bool => async dispatch => {
@@ -113,3 +110,10 @@ export const isLoading = bool => async dispatch => {
     payload: bool
   });
 } 
+
+export const setLoadingMovieInfo = bool => async dispatch => {
+  dispatch({
+    type: TYPES.IS_LOADING_MOVIE_INFO,
+    payload: bool
+  });
+}

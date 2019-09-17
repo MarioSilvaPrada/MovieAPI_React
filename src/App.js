@@ -10,7 +10,8 @@ import {
   genreSelected,
   getPage,
   selectDiscover,
-  selectMovie
+  selectMovie,
+  setLoadingMovieInfo
 } from "./actions/index";
 
 import Spinner from "./components/Spinner";
@@ -143,9 +144,11 @@ const App = ({
   getPage,
   discover,
   selectDiscover,
-  isLoading
+  isLoading,
+  setLoadingMovieInfo
 }) => {
   useEffect(() => {
+    setLoadingMovieInfo(true)
     getGenres();
     getPage();
     selectDiscover("popular");
@@ -188,7 +191,7 @@ const App = ({
             </p>
           </div>
           <h3>Genres</h3>
-          <p>All genres</p>
+          <p onClick={() => genreSelected("")}>All genres</p>
           {genres.map((genre, i) => (
             <p key={i} onClick={() => genreSelected(genre.id)}>
               {genre.name}
@@ -244,6 +247,7 @@ export default connect(
     genreSelected,
     getPage,
     selectDiscover,
-    selectMovie
+    selectMovie,
+    setLoadingMovieInfo
   }
 )(App);

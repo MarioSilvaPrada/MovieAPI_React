@@ -7,7 +7,8 @@ export const GET_CONFIG = 'GET_CONFIG';
 // Fetch Reducers
 export const GET_URL ='GET_URL';
 export const FETCH_MOVIES = 'FETCH_MOVIES';
-export const IS_LOADING = 'IS_LOADING';
+export const IS_LOADING = 'IS_LOADING'; 
+export const IS_LOADING_MOVIE_INFO = 'IS_LOADING_MOVIE_INFO';
 
 export const GENRE_SELECTED = 'GENRE_SELECTED';
 

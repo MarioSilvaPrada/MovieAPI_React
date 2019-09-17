@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
 
-import { selectMovie, isLoading } from "../actions/index";
+import { selectMovie } from "../actions/index";
 import Button from "../config/Button";
 import Spinner from "../components/Spinner";
 
@@ -13,7 +13,7 @@ const StyledContainer = styled.div`
   justify-content: center;
   align-items: center;
   color: white;
-
+  background: ${props => `url(https://image.tmdb.org/t/p/w1280${props.image})`};
   background-size: cover;
 `;
 
@@ -41,6 +41,7 @@ const MoviePoster = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  // opacity: 1;
   img {
     width: 30rem;
     border-radius: 0.5rem;
@@ -84,6 +85,7 @@ const StyledButtons = styled.div`
 const StyledCredits = styled.div`
   display: flex;
   overflow-x: scroll;
+  width: 100%;
 
   ::-webkit-scrollbar {
     width: 0.4rem;
@@ -96,22 +98,31 @@ const StyledCredits = styled.div`
     border: 0.2rem solid white;
   }
 
-  img {
-    width: 4rem;
-    height: 4rem;
-    object-fit: cover;
-    border-radius: 100%;
-    margin-right: 1rem;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-  }
+ 
 `;
 
-const MovieInfo = ({ history, match, data, trailer, selectMovie, credits, LoadingStatus, isLoading }) => {
+const StyledActorImage = styled.img`
+  width: 4rem;
+  height: 4rem;
+  object-fit: cover;
+  border-radius: 100%;
+  margin-right: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+`;
+
+const MovieInfo = ({
+  history,
+  match,
+  data,
+  trailer,
+  selectMovie,
+  credits,
+  LoadingStatus
+}) => {
   let id = match.params.movieId;
 
   useEffect(() => {
-    isLoading(true)
     selectMovie(id);
   }, [id]);
 
@@ -154,11 +165,15 @@ const MovieInfo = ({ history, match, data, trailer, selectMovie, credits, Loadin
           <StyledCredits>
             {credits.cast.map(actor =>
               actor.profile_path ? (
-                <img
+                <StyledActorImage
+                  alt="actor"
                   src={`https://image.tmdb.org/t/p/w185${actor.profile_path}`}
                 />
               ) : (
-                <img src="https://image.flaticon.com/icons/svg/145/145867.svg" />
+                <StyledActorImage
+                  alt="actor"
+                  src="https://image.flaticon.com/icons/svg/145/145867.svg"
+                />
               )
             )}
           </StyledCredits>
@@ -168,14 +183,14 @@ const MovieInfo = ({ history, match, data, trailer, selectMovie, credits, Loadin
   );
 };
 
-const mapStateToProps = ({ movieInfo, fetchReducer }) => ({
+const mapStateToProps = ({ movieInfo }) => ({
   data: movieInfo.data,
   trailer: movieInfo.trailer,
   credits: movieInfo.credits,
-  LoadingStatus: fetchReducer.loading
+  LoadingStatus: movieInfo.loading
 });
 
 export default connect(
   mapStateToProps,
-  { selectMovie, isLoading }
+  { selectMovie }
 )(MovieInfo);
