@@ -114,7 +114,7 @@ const StyleRating = styled.span`
   position: absolute;
   background: #f7b71d;
   color: black;
-  font-size: .8rem;
+  font-size: 0.8rem;
   padding: 0.3rem 0.4rem;
   border-radius: 0.2rem;
   font-weight: bold;
@@ -156,7 +156,7 @@ const App = ({
   setLoadingMovieInfo
 }) => {
   useEffect(() => {
-    setLoadingMovieInfo(true)
+    setLoadingMovieInfo(true);
     getGenres();
     getPage();
     selectDiscover("popular");
@@ -170,6 +170,8 @@ const App = ({
     fetchMovies();
   }, [discover, selectedGenre]);
 
+ 
+
   return isLoading ? (
     <Spinner />
   ) : (
@@ -177,7 +179,6 @@ const App = ({
       <h1>PRADA MOVIES</h1>
       <StyledContainer>
         <StyledSideBar>
-          {console.log(selectedGenre)}
           <div>
             <h3>Discover</h3>
             <p
@@ -200,12 +201,22 @@ const App = ({
             </p>
           </div>
           <h3>Genres</h3>
-          <p className = {selectedGenre === '' ? 'isSelected' : ''} onClick={() => genreSelected("")}>All genres</p>
+          <p
+            className={selectedGenre === "" ? "isSelected" : ""}
+            onClick={() => genreSelected("")}
+          >
+            All genres
+          </p>
           {genres.map((genre, i) => (
-            <p className = {selectedGenre === genre.id ? 'isSelected' : ''} key={i} onClick={() => genreSelected(genre.id)}>
+            <p
+              className={selectedGenre === genre.id ? "isSelected" : ""}
+              key={i}
+              onClick={() => genreSelected(genre.id)}
+            >
               {genre.name}
             </p>
           ))}
+          
         </StyledSideBar>
         <StyledMoviesContainer>
           <StyledMovies>
@@ -217,15 +228,17 @@ const App = ({
                     to={`/${movie.id}`}
                     style={{ textDecoration: "none", color: white }}
                   >
-                    {movie.poster_path ?
+                    {movie.poster_path ? (
                       <img
-                      src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
-                    /> :
-                    <img 
-                      src={'https://image.flaticon.com/icons/svg/863/863170.svg'}
-                    />
-                    }
-                    
+                        src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
+                      />
+                    ) : (
+                      <img
+                        src={
+                          "https://image.flaticon.com/icons/svg/863/863170.svg"
+                        }
+                      />
+                    )}
                   </Link>
 
                   <p>{movie.title}</p>

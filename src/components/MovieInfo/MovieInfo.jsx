@@ -1,23 +1,25 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
-import { selectMovie } from "../../actions/index";
+import { selectMovie, setLoadingActorInfo } from "../../actions/index";
 import Button from "../../config/Button";
 import Spinner from "../../components/Spinner";
 import * as S from "./MovieInfo.styled";
 
 const MovieInfo = ({
-  history,
   match,
   data,
   trailer,
   selectMovie,
   credits,
-  LoadingStatus
+  LoadingStatus,
+  setLoadingActorInfo
 }) => {
   let id = match.params.movieId;
 
   useEffect(() => {
+    setLoadingActorInfo(true)
     selectMovie(id);
   }, [id]);
 
@@ -34,8 +36,9 @@ const MovieInfo = ({
           <S.Title>
             <h1>{data.title}</h1>
             <p>
-              {data.spoken_languages[0].name} / {data.runtime} min /{" "}
-              {data.release_date.split("-")[0]}
+              {data.spoken_languages[0] && data.spoken_languages[0].name + "/"}{" "}
+              {data.runtime && data.runtime + "min / "}
+              {data.release_date && data.release_date.split("-")[0]}
             </p>
           </S.Title>
           <p className="desc">Genres</p>
@@ -62,19 +65,24 @@ const MovieInfo = ({
             )}
           </S.StyledButtons>
           <S.StyledCredits>
-            {credits.cast.map(actor =>
-              actor.profile_path ? (
-                <S.StyledActorImage
-                  alt="actor"
-                  src={`https://image.tmdb.org/t/p/w185${actor.profile_path}`}
-                />
-              ) : (
-                <S.StyledActorImage
-                  alt="actor"
-                  src="https://image.flaticon.com/icons/svg/145/145867.svg"
-                />
-              )
-            )}
+            {credits.cast.map(actor => (
+              <Link to={`/person/${actor.id}`} style={{ textDecoration: "none", color: 'white' }}>
+                <S.StyledActor>
+                  {actor.profile_path ? (
+                    <img
+                      alt="actor"
+                      src={`https://image.tmdb.org/t/p/w185${actor.profile_path}`}
+                    />
+                  ) : (
+                    <img
+                      alt="actor"
+                      src="https://image.flaticon.com/icons/svg/145/145867.svg"
+                    />
+                  )}
+                  <p>{actor.name}</p>
+                </S.StyledActor>
+              </Link>
+            ))}
           </S.StyledCredits>
         </S.StyledInfo>
       </S.StyledCard>
@@ -91,5 +99,5 @@ const mapStateToProps = ({ movieInfo }) => ({
 
 export default connect(
   mapStateToProps,
-  { selectMovie }
+  { selectMovie, setLoadingActorInfo }
 )(MovieInfo);

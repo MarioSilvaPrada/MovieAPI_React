@@ -67,6 +67,7 @@ export const getPage = (page = 1) => async dispatch => {
     type: TYPES.GET_PAGE,
     payload: page
   });
+  window.scrollTo({top: 0, behavior: 'smooth'})
 };
 
 export const selectDiscover = discover => async dispatch => {
@@ -114,6 +115,28 @@ export const isLoading = bool => async dispatch => {
 export const setLoadingMovieInfo = bool => async dispatch => {
   dispatch({
     type: TYPES.IS_LOADING_MOVIE_INFO,
+    payload: bool
+  });
+}
+
+export const getActorInfo = id => async dispatch => {
+
+  let data = await axios.get(`${API_URL}person/${id}?api_key=${API_KEY}`);
+
+  dispatch({
+    type: TYPES.SELECT_ACTOR_ID,
+    payload: data
+  });
+  
+  dispatch({
+    type: TYPES.IS_LOADING_ACTOR_INFO,
+    payload: false
+  });
+}
+
+export const setLoadingActorInfo = bool => async dispatch => {
+  dispatch({
+    type: TYPES.IS_LOADING_ACTOR_INFO,
     payload: bool
   });
 }
