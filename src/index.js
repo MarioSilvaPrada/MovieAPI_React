@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
-import MovieInfo from "./components/MovieInfo";
+import MovieInfo from "./components/MovieInfo/MovieInfo";
 import * as serviceWorker from "./serviceWorker";
 
 import store from "./store/store";

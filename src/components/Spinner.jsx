@@ -4,10 +4,13 @@ import styled from "styled-components";
 const LoaderWrapper = styled.div`
   display: flex;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   min-height: 150px;
   justify-content: center;
   align-items: center;
+  background: #00b4db;
+  background: -webkit-linear-gradient(to right, #0083b0, #00b4db);
+  background: linear-gradient(to right, #0083b0, #00b4db);
 `;
 
 const Loading = styled.div`

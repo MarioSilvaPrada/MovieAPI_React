@@ -31,15 +31,17 @@ const StyledApp = styled.div`
   background: -webkit-linear-gradient(to right, #0083b0, #00b4db);
   background: linear-gradient(to right, #0083b0, #00b4db);
   color: white;
+  min-height: 100vh;
 `;
 
 const StyledContainer = styled.div`
   display: flex;
-  width: 80rem;
+  width: 90rem;
   padding: 3rem;
   background: #003459;
   border-radius: 2rem;
   box-shadow: 0 2rem 6rem rgba(0, 0, 0, 0.3);
+  margin: 2rem auto 8rem;
 `;
 
 const StyledSideBar = styled.div`
@@ -48,6 +50,7 @@ const StyledSideBar = styled.div`
   overflow-y: scroll;
   height: 40rem;
   padding-right: 1rem;
+  width: 15rem;
 
   ::-webkit-scrollbar {
     width: 0.6rem;
@@ -63,21 +66,24 @@ const StyledSideBar = styled.div`
     cursor: pointer;
     padding: 0.4em 0.2em;
     text-align: center;
+    padding: 0.5rem 2rem;
+    border: 2px solid transparent;
+    border-radius: 2rem;
+    transition: 0.5s;
   }
 
   p:hover {
     cursor: pointer;
-    background: ${white(0.3)};
-    color: #005b96;
-    transition: 0.5s;
-    font-weight: bold;
+    color: #00b4db;
+    border: 2px solid #00b4db;
+    border-radius: 2rem;
   }
 
   .isSelected {
-    color: #005b96;
-    background: ${white(0.5)};
+    color: #00b4db;
+    border: 2px solid #00b4db;
+    border-radius: 2rem;
     transition: 0.5s;
-    font-weight: bold;
   }
 `;
 
@@ -88,7 +94,7 @@ const MovieCard = styled.div`
   justify-content: space-between;
   align-items: center;
   position: relative;
-  width: 13rem;
+  width: 14rem;
   img {
     width: 12rem;
     border-radius: 5px;
@@ -104,18 +110,20 @@ const MovieCard = styled.div`
 `;
 
 const StyleRating = styled.span`
+  width: 2rem;
   position: absolute;
   background: #f7b71d;
   color: black;
-  font-size: 0.6rem;
+  font-size: .8rem;
   padding: 0.3rem 0.4rem;
   border-radius: 0.2rem;
   font-weight: bold;
-  top: -0.5rem;
+  top: -0.7rem;
   left: 9rem;
   border: 1px solid black;
   display: flex;
   align-items: center;
+  justify-content: space-evenly;
 `;
 
 const StyledMoviesContainer = styled.div`
@@ -166,9 +174,10 @@ const App = ({
     <Spinner />
   ) : (
     <StyledApp>
-      <h1>Movie API</h1>
+      <h1>PRADA MOVIES</h1>
       <StyledContainer>
         <StyledSideBar>
+          {console.log(selectedGenre)}
           <div>
             <h3>Discover</h3>
             <p
@@ -191,9 +200,9 @@ const App = ({
             </p>
           </div>
           <h3>Genres</h3>
-          <p onClick={() => genreSelected("")}>All genres</p>
+          <p className = {selectedGenre === '' ? 'isSelected' : ''} onClick={() => genreSelected("")}>All genres</p>
           {genres.map((genre, i) => (
-            <p key={i} onClick={() => genreSelected(genre.id)}>
+            <p className = {selectedGenre === genre.id ? 'isSelected' : ''} key={i} onClick={() => genreSelected(genre.id)}>
               {genre.name}
             </p>
           ))}
@@ -208,9 +217,15 @@ const App = ({
                     to={`/${movie.id}`}
                     style={{ textDecoration: "none", color: white }}
                   >
-                    <img
+                    {movie.poster_path ?
+                      <img
                       src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
+                    /> :
+                    <img 
+                      src={'https://image.flaticon.com/icons/svg/863/863170.svg'}
                     />
+                    }
+                    
                   </Link>
 
                   <p>{movie.title}</p>
