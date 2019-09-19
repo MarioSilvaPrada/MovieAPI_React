@@ -56,3 +56,40 @@ export const StyledGenres = styled.div`
     border-radius: 2rem;
   }
 `;
+
+export const HeaderNavBar = styled.div`
+  height: 5rem;
+  width: 100%;
+  background: grey;
+  position: fixed;
+  top: 0;
+  left:0;
+  z-index:999;
+  display: flex;
+  align-items: center;
+`
+
+export const Hamburguer = styled.div`
+  border: none;
+  outline: none;
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  justify-content: space-around;
+  width: 25px;
+  line-height: 1;
+  height: auto;
+  background-color: transparent;
+  cursor: pointer;
+  margin-left: 5rem;
+`;
+
+export const Bar = styled.span`
+  transition: all 0.3s;
+  border-radius: 10px;
+  margin: 2px 0;
+  height: 4px;
+  width: 100%;
+  display: inline-block;
+  background-color: black;
+`;

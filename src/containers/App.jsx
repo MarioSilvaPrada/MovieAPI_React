@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
+
 // styling
 import * as S from "./App.styled";
 

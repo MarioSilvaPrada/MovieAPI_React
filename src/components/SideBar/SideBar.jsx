@@ -1,36 +1,94 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
+import { slide as Menu } from "react-burger-menu";
+import { HamburgerMenu } from "react-hamburger-menu";
 
 import * as S from "./SideBar.styled";
 
 import { genreSelected, selectDiscover } from "../../actions";
 
-const SideBar = ({ genres, selectDiscover, discover, selectedGenre, genreSelected }) => {
+var styles = {
+  bmBurgerButton: {
+    display: "none"
+  },
+  bmCrossButton: {
+    height: "24px",
+    width: "24px",
+    marginRight: "1rem"
+  },
+  bmCross: {
+    background: "#fafafa"
+  },
+  bmMenuWrap: {
+    position: "fixed",
+    height: "100%",
+    top: 0,
+    left: 0
+  },
+  bmMenu: {
+    background: "#263238",
+    overflowY: "scroll",
+    padding: "2.5em 1.5em"
+  },
+  bmItemList: {
+    color: "#fafafa",
+    padding: "0.8rem"
+  },
+  bmItem: {
+    outline: "none"
+  },
+  bmOverlay: {
+    top: 0,
+    background: "rgba(0, 0, 0, 0.3)"
+  }
+};
+
+const SideBar = ({
+  genres,
+  selectDiscover,
+  discover,
+  selectedGenre,
+  genreSelected
+}) => {
+  const [isOpened, setisOpened] = useState(false);
+
+  const isMenuOpen = ({ isOpened }) => {
+    setisOpened(isOpened);
+  };
+
   return (
     <S.StyledSideBar>
-      <S.StyledDiscover>
-        <h3>Discover</h3>
-        <p
-          className={discover === "popular" ? "isSelected" : ""}
-          onClick={() => selectDiscover("popular")}
-        >
-          Popular
-        </p>
-        <p
-          className={discover === "top_rated" ? "isSelected" : ""}
-          onClick={() => selectDiscover("top_rated")}
-        >
-          Top Rated
-        </p>
-        <p
-          className={discover === "now_playing" ? "isSelected" : ""}
-          onClick={() => selectDiscover("now_playing")}
-        >
-          Now Playing
-        </p>
-      </S.StyledDiscover>
-      <h3>Genres</h3>
-      <S.StyledGenres>
+      <S.HeaderNavBar>
+        <S.Hamburguer onClick = {() => setisOpened(true)}>
+          <S.Bar />
+          <S.Bar />
+          <S.Bar />
+        </S.Hamburguer>
+      </S.HeaderNavBar>
+      <Menu isOpen={isOpened} onStateChange={isMenuOpen} styles={styles}>
+        <S.StyledDiscover>
+          <h3>Discover</h3>
+          <p
+            className={discover === "popular" ? "isSelected" : ""}
+            onClick={() => selectDiscover("popular")}
+          >
+            Popular
+          </p>
+          <p
+            className={discover === "top_rated" ? "isSelected" : ""}
+            onClick={() => selectDiscover("top_rated")}
+          >
+            Top Rated
+          </p>
+          <p
+            className={discover === "now_playing" ? "isSelected" : ""}
+            onClick={() => selectDiscover("now_playing")}
+          >
+            Now Playing
+          </p>
+        </S.StyledDiscover>
+        <h3>Genres</h3>
+        <S.StyledGenres>
           <p
             className={selectedGenre === "" ? "isSelected" : ""}
             onClick={() => genreSelected("")}
@@ -46,7 +104,8 @@ const SideBar = ({ genres, selectDiscover, discover, selectedGenre, genreSelecte
               {genre.name}
             </p>
           ))}
-      </S.StyledGenres>
+        </S.StyledGenres>
+      </Menu>
     </S.StyledSideBar>
   );
 };
