@@ -36,7 +36,7 @@ export const MoviePoster = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 80%;
+  height: 85%;
   opacity: 1;
   img {
     width: auto;
@@ -55,7 +55,7 @@ export const StyledInfo = styled.div`
   flex-direction: column;
   justify-content: space-between;
   width: 46rem;
-  height: 80%;
+  height: 90%;
 
   h1 {
     margin-top: 0;
@@ -92,16 +92,17 @@ export const StyledCredits = styled.div`
   flex-wrap: wrap;
   overflow-y: scroll;
   width: 100%;
-  height: 12rem;
+  // height: 14rem;
+  margin-bottom: 2rem;
 
   ::-webkit-scrollbar {
-    width: 0.4rem;
+    width: .6rem;
   }
 
   /* Handle */
   ::-webkit-scrollbar-thumb {
+    background: white;
     border-radius: 2rem;
-    border: 0.2rem solid white;
   }
 `;
 

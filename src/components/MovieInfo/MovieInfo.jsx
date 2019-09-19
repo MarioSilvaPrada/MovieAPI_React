@@ -19,7 +19,7 @@ const MovieInfo = ({
   let id = match.params.movieId;
 
   useEffect(() => {
-    setLoadingActorInfo(true)
+    setLoadingActorInfo(true);
     selectMovie(id);
   }, [id]);
 
@@ -49,24 +49,13 @@ const MovieInfo = ({
           </div>
           <p className="desc">The Synopsis</p>
           <p className="movie-overview">{data.overview}</p>
-          <S.StyledButtons>
-            {data.homepage && <Button href={data.homepage} title="Home Page" />}
-            {data.imdb_id && (
-              <Button
-                href={"https://www.imdb.com/title/" + data.imdb_id}
-                title="IMDB"
-              />
-            )}
-            {trailer && (
-              <Button
-                href={"https://www.youtube.com/watch?v=" + trailer.key}
-                title="Trailer"
-              />
-            )}
-          </S.StyledButtons>
+
           <S.StyledCredits>
             {credits.cast.map(actor => (
-              <Link to={`/person/${actor.id}`} style={{ textDecoration: "none", color: 'white' }}>
+              <Link
+                to={`/person/${actor.id}`}
+                style={{ textDecoration: "none", color: "white" }}
+              >
                 <S.StyledActor>
                   {actor.profile_path ? (
                     <img
@@ -84,6 +73,21 @@ const MovieInfo = ({
               </Link>
             ))}
           </S.StyledCredits>
+          <S.StyledButtons>
+            {data.homepage && <Button href={data.homepage} title="Home Page" />}
+            {data.imdb_id && (
+              <Button
+                href={"https://www.imdb.com/title/" + data.imdb_id}
+                title="IMDB"
+              />
+            )}
+            {trailer && (
+              <Button
+                href={"https://www.youtube.com/watch?v=" + trailer.key}
+                title="Trailer"
+              />
+            )}
+          </S.StyledButtons>
         </S.StyledInfo>
       </S.StyledCard>
     </S.StyledContainer>
