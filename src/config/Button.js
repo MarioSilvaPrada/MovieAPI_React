@@ -14,6 +14,9 @@ const StyledButton = styled.a`
   font-weight: bold;
   transition: .5s;
   font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   :hover {
     color: #003459;

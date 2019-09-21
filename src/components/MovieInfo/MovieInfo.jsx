@@ -28,7 +28,7 @@ const MovieInfo = ({
   ) : (
     <S.StyledContainer image={data.backdrop_path}>
       <S.StyledCard>
-        <S.MoviePoster>
+        <S.MoviePoster style={{ marginBottom: data.tagline ? 0 : '3rem' }}>
           <img src={`https://image.tmdb.org/t/p/w300${data.poster_path}`} />
           {data.tagline ? <i>"{data.tagline}"</i> : ""}
         </S.MoviePoster>
