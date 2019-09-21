@@ -8,13 +8,13 @@ export const StyledMovies = styled.div`
 `;
 
 export const MovieCard = styled.div`
-  margin: 2em;
+  margin: 2em 0;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   position: relative;
-  width: 14rem;
+  width: 15rem;
   img {
     width: 12rem;
     border-radius: 5px;

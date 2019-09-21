@@ -51,7 +51,6 @@ const App = ({
     <Spinner />
   ) : (
     <S.StyledApp>
-      <h1>PRADA MOVIES</h1>
       <S.StyledContainer>
         <SideBar />
         <S.StyledMoviesContainer>

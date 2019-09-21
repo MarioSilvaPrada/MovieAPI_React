@@ -9,21 +9,28 @@ export const StyledContainer = styled.div`
   background: -webkit-linear-gradient(to right, #0083b0, #00b4db);
   background: linear-gradient(to right, #0083b0, #00b4db);
   color: white;
-  padding: 3rem 0 5rem;
 `;
 
 export const StyledCard = styled.div`
-  width: 95rem;
-  min-height: 60rem;
+  width: 100%;
+  height: 100vh;
   background: #005b96;
   opacity: 0.9;
-  border-radius: 3rem;
   padding: 2rem 3rem;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: center;
   filter: none;
-  border: 2px solid white;
+
+  @media (min-width: 830px) {
+    width: 95rem;
+    height: 60rem;
+    border: 2px solid white;
+    border-radius: 3rem;
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
 `;
 
 export const ActorImage = styled.div`
@@ -44,9 +51,7 @@ export const ActorInfo = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 46rem;
-  height: 80%;
-
+  padding: 0 4rem;
   h1 {
     font-size: 3rem;
   }
@@ -56,5 +61,11 @@ export const ActorInfo = styled.div`
   p {
     font-size: 1.2rem;
     margin-bottom: 5rem;
+  }
+
+  @media (min-width: 830px) {
+    height: 80%;
+    width: 46rem;
+    padding: 0;
   }
 `;
