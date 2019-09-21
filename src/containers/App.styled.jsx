@@ -38,5 +38,6 @@ export const StyledMoviesContainer = styled.div`
     margin-left: 2rem;
     height: auto;
     border-radius: 2rem;
+    
   }
 `;
