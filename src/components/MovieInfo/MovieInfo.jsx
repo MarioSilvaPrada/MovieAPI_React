@@ -50,6 +50,8 @@ const MovieInfo = ({
           <p className="desc">The Synopsis</p>
           <p className="movie-overview">{data.overview}</p>
 
+          <p className="desc">Cast</p>
+
           <S.StyledCredits>
             {credits.cast.map(actor => (
               <Link

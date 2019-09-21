@@ -92,7 +92,7 @@ export const StyledCredits = styled.div`
   flex-wrap: wrap;
   overflow-y: scroll;
   width: 100%;
-  // height: 14rem;
+  margin-top: 1rem;
   margin-bottom: 2rem;
 
   ::-webkit-scrollbar {
