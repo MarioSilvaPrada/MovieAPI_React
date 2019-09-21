@@ -25,7 +25,7 @@ export const StyledCard = styled.div`
 
   @media (min-width: 830px) {
     width: 95rem;
-    height: 60rem;
+    height: 100%;
     border: 2px solid white;
     border-radius: 3rem;
     flex-direction: row;
