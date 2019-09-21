@@ -13,7 +13,7 @@ export const StyledContainer = styled.div`
 
 export const StyledCard = styled.div`
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   background: #005b96;
   opacity: 0.9;
   padding: 2rem 3rem;
@@ -38,9 +38,8 @@ export const ActorImage = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 40rem;
+  height: 35rem;
   img {
-    width: auto;
     height: 100%;
     border-radius: 0.5rem;
     box-shadow: 0rem 2rem 5rem rgba(0, 0, 0, 0.25);
